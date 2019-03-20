@@ -24,7 +24,6 @@ steps:
     agents:
       - "role=anka-tester"
     timeout: 60
-    cancel-grace-period: 5000
     # retry:
     #   automatic:
     #     # Agent was lost
