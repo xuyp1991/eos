@@ -11,11 +11,11 @@ steps:
 
   - label: ":darwin: High Sierra Build"
     command:
-      - "sleep 100000"
+      #- "sleep 100000"
       - "cd /data/job && ./scripts/eosio_build.sh -y"
       - "tar -pczf /Network/AFP/NAS/buildkite-artifacts/build-$BUILDKITE_BUILD_ID.tar.gz build"
     plugins:
-      chef/anka#v0.3.1:
+      chef/anka#v0.4.0:
         vm-name: $ANKA_IMAGE_NAME
         vm-registry-tag: $ANKA_IMAGE_TAG
         always-pull: "shrink"
@@ -46,7 +46,7 @@ steps:
     agents:
       - "role=anka-tester"
     plugins:
-      chef/anka#v0.2.0:
+      chef/anka#v0.4.0:
         vm-name: $ANKA_IMAGE_NAME
         vm-registry-tag: $ANKA_IMAGE_TAG
         workdir: $ANKA_WORKDIR
@@ -67,7 +67,7 @@ steps:
     agents:
       - "role=anka-tester"
     plugins:
-      chef/anka#v0.2.0:
+      chef/anka#v0.4.0:
         vm-name: $ANKA_IMAGE_NAME
         vm-registry-tag: $ANKA_IMAGE_TAG
         workdir: $ANKA_WORKDIR
