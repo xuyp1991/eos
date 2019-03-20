@@ -13,7 +13,7 @@ steps:
     command:
       #- "sleep 100000"
       - "echo BUILDKITE_CANCEL_GRACE_PERIOD -------------"
-      - "echo $BUILDKITE_CANCEL_GRACE_PERIOD"
+      - "echo \$BUILDKITE_CANCEL_GRACE_PERIOD"
       - "cd /data/job && ./scripts/eosio_build.sh -y"
       - "tar -pczf /Network/AFP/NAS/buildkite-artifacts/build-$BUILDKITE_BUILD_ID.tar.gz build"
     plugins:
