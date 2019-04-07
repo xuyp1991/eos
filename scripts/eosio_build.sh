@@ -180,10 +180,9 @@ if [ ! -d "${REPO_ROOT}/.git" ]; then
    exit 1
 fi
 
-cd $REPO_ROOT
+execute cd $REPO_ROOT
 
-STALE_SUBMODS=$(( $(git submodule status --recursive | grep -c "^[+\-]") ))
-if [ $STALE_SUBMODS -gt 0 ]; then
+if [[ $(git submodule status --recursive | grep -c "^[+\-]") -gt 0 ]]; then
    printf "\\ngit submodules are not up to date.\\n"
    printf "Please run the command 'git submodule update --init --recursive'.\\n"
    exit 1
