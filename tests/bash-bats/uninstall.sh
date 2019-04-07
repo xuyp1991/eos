@@ -2,10 +2,11 @@
 load test_helper
 
 SCRIPT_LOCATION="scripts/eosio_uninstall.sh"
+TEST_NAME="[uninstall]"
 
 # A helper function is available to show output and status: `debug`
 
-@test "Usage is visible with right interaction" {
+@test "${TEST_NAME} > Usage is visible with right interaction" {
   run ./$SCRIPT_LOCATION -help
   [[ $output =~ "Usage ---" ]] || exit
   run ./$SCRIPT_LOCATION --help
@@ -16,7 +17,7 @@ SCRIPT_LOCATION="scripts/eosio_uninstall.sh"
   [[ $output =~ "Usage ---" ]] || exit
 }
 
-@test "Testing user prompts" {
+@test "${TEST_NAME} > Testing user prompts" {
   ## No y or no warning and re-prompt
   run bash -c "echo -e \"\nx\nx\nx\" | ./$SCRIPT_LOCATION"
   ( [[ "${lines[3]}" == "Please type 'y' for yes or 'n' for no." ]] && [[ "${lines[2]}" == "Please type 'y' for yes or 'n' for no." ]] ) || exit
@@ -30,13 +31,13 @@ SCRIPT_LOCATION="scripts/eosio_uninstall.sh"
   [[ "${lines[0]}" =~ "Cancelled EOSIO Removal!" ]] || exit
 }
 
-@test "--force" {
+@test "${TEST_NAME} > --force" {
   run ./$SCRIPT_LOCATION --force
   echo "${output}" >&3
   [[ "${output##*$'\n'}" == "[EOSIO Removal Complete]" ]] || exit
 }
 
-@test "--force + --full" {
+@test "${TEST_NAME} > --force + --full" {
   run ./$SCRIPT_LOCATION --force --full
   ([[ ! "${output[*]}" =~ "Library/Application\ Support/eosio" ]] && [[ ! "${output[*]}" =~ ".local/share/eosio" ]]) && exit
   [[ "${output##*$'\n'}" == "[EOSIO Removal Complete]" ]] || exit

@@ -24,8 +24,7 @@ create_home_dir() {
 }
 
 debug() {
-  echo "STATUS: ${status}" >&3
-  printf " ---------\\n${output}\\n ---------\\n\\n" >&3
+  printf " ---------\\n STATUS: ${status}\\n${output}\\n ---------\\n\\n" >&3
 }
 
 setup() { # setup is run once before each test
