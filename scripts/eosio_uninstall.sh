@@ -74,7 +74,7 @@ while true; do
          if [[ $( uname ) == "Darwin" ]]; then
             for package in $(cat scripts/eosio_build_darwin_deps | cut -d, -f4 2>/dev/null); do
                while true; do
-                  [[ $DEP_PROCEED == false ]] && read -p "Do you wish to uninstall and unlink all brew installed llvm@4 versions? (y/n) " DEP_PROCEED
+                  [[ $FORCED == false ]] && read -p "Do you wish to uninstall and unlink all brew installed ${package} versions? (y/n) " DEP_PROCEED
                   case $DEP_PROCEED in
                      "") "What would you like to do?";;
                      0 | true | [Yy]* )
