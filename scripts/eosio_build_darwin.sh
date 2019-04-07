@@ -53,7 +53,7 @@ fi
 printf "\\n"
 
 printf "Checking xcode-select installation...\\n"
-if ! XCODESELECT=$( command -v xcode-select)
+if ! XCODESELECT=$( command -v xcode-select )
 then
 	printf " - XCode must be installed in order to proceed!\\n\\n"
 	exit 1
@@ -61,7 +61,7 @@ fi
 printf " - XCode installation found @ ${XCODESELECT}\\n"
 
 printf "Checking Ruby installation...\\n"
-if ! RUBY=$( command -v ruby)
+if ! RUBY=$( command -v ruby )
 then
 	printf " - Ruby must be installed in order to proceed!\\n"
 	exit 1
@@ -93,7 +93,7 @@ printf " - Home Brew installation found @ ${BREW}\\n"
 printf "\\nChecking dependencies...\\n"
 var_ifs="${IFS}"
 IFS=","
-while read -r name tester testee brewname uri; do
+while read -r name tester testee uri; do
 	if [ $tester $testee ]; then
 		printf " - ${name} found!\\n"
 		continue
@@ -105,7 +105,7 @@ while read -r name tester testee brewname uri; do
 			continue
 		fi
 	fi
-	DEPS=$DEPS"${brewname},"
+	DEPS=$DEPS"${name},"
 	DISPLAY="${DISPLAY}${COUNT}. ${name}\\n"
 	printf " - ${name} ${bldred}NOT${txtrst} found.\\n"
 	(( COUNT++ ))

@@ -6,9 +6,9 @@ load test_helper
 # Load helpers (BE CAREFUL)
 . ./scripts/helpers.bash
 
-TEST_NAME="[helpers]"
+TEST_LABEL="[helpers]"
 
-@test "${TEST_NAME} > execute" {
+@test "${TEST_LABEL} > execute" {
   ## DRYRUN WORKS (true, false, and empty)
   run execute exit 1
   ( [[ $output =~ "Executing: exit 1" ]] && [[ $status -eq 0 ]] ) || exit

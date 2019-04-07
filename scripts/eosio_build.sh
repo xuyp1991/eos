@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/usr/bin/env bash
+set -eo pipefail
 ##########################################################################
 # This is the EOSIO automated install script for Linux and Mac OS.
 # This file was downloaded from https://github.com/EOSIO/eos
@@ -30,7 +31,10 @@
 # https://github.com/EOSIO/eos/blob/master/LICENSE
 ##########################################################################
 
-VERSION=2.2 # Build script version
+# Load bash script helper functions
+. ./scripts/helpers.bash
+
+VERSION=3.0 # Build script version
 CMAKE_BUILD_TYPE=Release
 DOXYGEN=false
 ENABLE_COVERAGE_TESTING=false
@@ -77,14 +81,14 @@ export TINI_VERSION=0.18.0
 export DISK_MIN=5
 
 # Setup directories
-mkdir -p $SRC_LOCATION
-mkdir -p $OPT_LOCATION
-mkdir -p $VAR_LOCATION
-mkdir -p $BIN_LOCATION
-mkdir -p $VAR_LOCATION/log
-mkdir -p $ETC_LOCATION
-mkdir -p $MONGODB_LOG_LOCATION
-mkdir -p $MONGODB_DATA_LOCATION
+execute mkdir -p $SRC_LOCATION
+execute mkdir -p $OPT_LOCATION
+execute mkdir -p $VAR_LOCATION
+execute mkdir -p $BIN_LOCATION
+execute mkdir -p $VAR_LOCATION/log
+execute mkdir -p $ETC_LOCATION
+execute mkdir -p $MONGODB_LOG_LOCATION
+execute mkdir -p $MONGODB_DATA_LOCATION
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 REPO_ROOT="${SCRIPT_DIR}/.."
@@ -99,9 +103,15 @@ else # noexec wasn't found
       TEMP_DIR="/tmp"
 fi
 
-function usage()
-{
-   printf "Usage: %s \\n[Build Option -o <Debug|Release|RelWithDebInfo|MinSizeRel>] \\n[CodeCoverage -c] \\n[Doxygen -d] \\n[CoreSymbolName -s <1-7 characters>] \\n[Avoid Compiling -a]\\n[Noninteractive -y]\\n\\n" "$0" 1>&2
+function usage() {
+   printf "Usage: %s \\n
+   [Build Option -o <Debug|Release|RelWithDebInfo|MinSizeRel>]
+   \\n[CodeCoverage -c] 
+   \\n[Doxygen -d]
+   \\n[CoreSymbolName -s <1-7 characters>]
+   \\n[Avoid Compiling -a]
+   \\n[Noninteractive -y]
+   \\n\\n" "$0" 1>&2
    exit 1
 }
 
@@ -263,10 +273,6 @@ if [ "$ARCH" == "Darwin" ]; then
    OPENSSL_ROOT_DIR=/usr/local/opt/openssl
 fi
 
-# Cleanup old installation
-. ./scripts/full_uninstaller.sh $NONINTERACTIVE
-if [ $? -ne 0 ]; then exit -1; fi # Stop if exit from script is not 0
-
 pushd $SRC_LOCATION &> /dev/null
 . "$FILE" $NONINTERACTIVE # Execute OS specific build file
 popd &> /dev/null
@@ -276,19 +282,19 @@ printf "======================= Starting EOSIO Build =======================\\n"
 printf "## CMAKE_BUILD_TYPE=%s\\n" "${CMAKE_BUILD_TYPE}"
 printf "## ENABLE_COVERAGE_TESTING=%s\\n" "${ENABLE_COVERAGE_TESTING}"
 
-mkdir -p $BUILD_DIR
-cd $BUILD_DIR
+execute mkdir -p $BUILD_DIR
+execute cd $BUILD_DIR
 
-$CMAKE -DCMAKE_BUILD_TYPE="${CMAKE_BUILD_TYPE}" -DCMAKE_CXX_COMPILER="${CXX_COMPILER}" \
+execute $CMAKE -DCMAKE_BUILD_TYPE="${CMAKE_BUILD_TYPE}" -DCMAKE_CXX_COMPILER="${CXX_COMPILER}" \
    -DCMAKE_C_COMPILER="${C_COMPILER}" -DCORE_SYMBOL_NAME="${CORE_SYMBOL_NAME}" \
    -DOPENSSL_ROOT_DIR="${OPENSSL_ROOT_DIR}" -DBUILD_MONGO_DB_PLUGIN=true \
    -DENABLE_COVERAGE_TESTING="${ENABLE_COVERAGE_TESTING}" -DBUILD_DOXYGEN="${DOXYGEN}" \
    -DCMAKE_INSTALL_PREFIX=$OPT_LOCATION/eosio $LOCAL_CMAKE_FLAGS "${REPO_ROOT}"
 if [ $? -ne 0 ]; then exit -1; fi
-make -j"${JOBS}"
+execute make -j"${JOBS}"
 if [ $? -ne 0 ]; then exit -1; fi
 
-cd $REPO_ROOT
+execute cd $REPO_ROOT
 
 TIME_END=$(( $(date -u +%s) - $TIME_BEGIN ))
 
@@ -302,6 +308,7 @@ printf "| (____/\| (___) |/\____) |___) (___| (___) |\n"
 printf "(_______/(_______)\_______)\_______/(_______)\n\n${txtrst}"
 
 printf "\\nEOSIO has been successfully built. %02d:%02d:%02d\\n" $(($TIME_END/3600)) $(($TIME_END%3600/60)) $(($TIME_END%60))
+printf "\\nUninstallation is available with ./scripts/eosio_uninstall.sh\\n"
 printf "==============================================================================================\\n${bldred}"
 printf "(Optional) Testing Instructions:\\n"
 print_instructions

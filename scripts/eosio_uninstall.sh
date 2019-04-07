@@ -72,14 +72,14 @@ while true; do
       0 | true | [Yy]* )
          echo "[Removing EOSIO and Dependencies]"
          if [[ $( uname ) == "Darwin" ]]; then
-            for package in $(cat scripts/eosio_build_darwin_deps | cut -d, -f4 2>/dev/null); do
+            for package in $(cat scripts/eosio_build_darwin_deps | cut -d, -f1 2>/dev/null); do
                while true; do
                   [[ $FORCED == false ]] && read -p "Do you wish to uninstall and unlink all brew installed ${package} versions? (y/n) " DEP_PROCEED
                   case $DEP_PROCEED in
-                     "") "What would you like to do?";;
+                     "") echo "What would you like to do?";;
                      0 | true | [Yy]* )
-                        execute brew uninstall $package --force
-                        execute brew cleanup -s $package
+                        execute brew uninstall $package --force || true
+                        execute brew cleanup -s $package || true
                         break;;
                      1 | false | [Nn]* ) break;;
                      * ) echo "Please type 'y' for yes or 'n' for no.";;
