@@ -31,15 +31,16 @@ set -eo pipefail
 # https://github.com/EOSIO/eos/blob/master/LICENSE
 ##########################################################################
 
-# Load bash script helper functions
-. ./scripts/helpers.bash
-
 VERSION=3.0 # Build script version
 CMAKE_BUILD_TYPE=Release
 DOXYGEN=false
 ENABLE_COVERAGE_TESTING=false
 CORE_SYMBOL_NAME="SYS"
 START_MAKE=true
+export VERBOSE=false # Disable execution messages in STDOUT
+
+# Load bash script helper functions
+. ./scripts/helpers.bash
 
 TIME_BEGIN=$( date -u +%s )
 txtbld=$(tput bold)
@@ -183,7 +184,7 @@ fi
 execute cd $REPO_ROOT
 
 if [[ $(git submodule status --recursive | grep -c "^[+\-]") -gt 0 ]]; then
-   printf "\\ngit submodules are not up to date.\\n"
+   printf "git submodules are not up to date.\\n"
    printf "Please run the command 'git submodule update --init --recursive'.\\n"
    exit 1
 fi

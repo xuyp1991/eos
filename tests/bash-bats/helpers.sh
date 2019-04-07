@@ -8,7 +8,7 @@ load test_helper
 
 TEST_LABEL="[helpers]"
 
-@test "${TEST_LABEL} > execute" {
+@test "${TEST_LABEL} > execute > dryrun" {
   ## DRYRUN WORKS (true, false, and empty)
   run execute exit 1
   ( [[ $output =~ "Executing: exit 1" ]] && [[ $status -eq 0 ]] ) || exit
@@ -18,4 +18,15 @@ TEST_LABEL="[helpers]"
   DRYRUN=
   run execute exit 1
   ( [[ $output =~ "Executing: exit 1" ]] && [[ $status -eq 1 ]] ) || exit
+}
+
+@test "${TEST_LABEL} > execute > verbose" {
+  ## VERBOSE WORKS (true, false, and empty)
+  run execute echo "VERBOSE!"
+  ( [[ $output =~ "Executing: echo VERBOSE!" ]] && [[ $status -eq 0 ]] ) || exit
+  VERBOSE=false
+  run execute echo "VERBOSE!"
+  ( [[ ! $output =~ "Executing: echo VERBOSE!" ]] && [[ $status -eq 0 ]] ) || exit
+  VERBOSE=
+  ( [[ ! $output =~ "Executing: echo VERBOSE!" ]] && [[ $status -eq 0 ]] ) || exit
 }

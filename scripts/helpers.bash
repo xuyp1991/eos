@@ -1,4 +1,4 @@
 function execute() {
-  echo "- Executing: $@"
+  ( [[ ! -z "${VERBOSE}" ]] && $VERBOSE ) && echo "- Executing: $@"
   ( [[ ! -z "${DRYRUN}" ]] && $DRYRUN ) || "$@"
 }

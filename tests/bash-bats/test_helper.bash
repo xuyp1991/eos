@@ -2,6 +2,7 @@
 
 # DO NOT REMOVE
 export DRYRUN=true
+export VERBOSE=true
 
 # Arrays should return with newlines so we can do something like "${output##*$'\n'}" to get the last line
 IFS=$'\n'
