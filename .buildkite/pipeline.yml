@@ -13,7 +13,7 @@ steps:
     async: true
     build:
       commit: "${BUILDKITE_COMMIT}"
-      branch: "${BUILDKITE_BRANCH}"
+      branch: "master"
 
   - wait
 
