@@ -1,3 +1,10 @@
+---
+#######################################################################################################################################################################################################################
+# Executing commands without the anka plugin enabled WILL EXECUTE ON THE HOST MACHINE AND COULD RUIN THEM. Please ensure you've set the chef/anka plugin and tested that it's executing your commands inside of the VM!
+#######################################################################################################################################################################################################################
+# You can look for problems using yamllint: brew install yamllint
+# Artifact storage is available through root::nas tags; mounted NAS located in /Network/NAS
+
 steps:
 
   - trigger: "mac-anka-fleet"
@@ -7,3 +14,13 @@ steps:
     build:
       commit: "${BUILDKITE_COMMIT}"
       branch: "${BUILDKITE_BRANCH}"
+
+  - wait
+
+  - label: ":darwin: Testing"
+    command:
+      - "echo Yep"
+    plugins:
+    agents:
+      - "queue=mac-anka-fleet"
+    timeout: 60
