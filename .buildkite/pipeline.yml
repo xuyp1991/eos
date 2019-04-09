@@ -1,6 +1,6 @@
 steps:
 
-  - trigger: "ensure-anka-tag"
+  - trigger: "mac-anka-fleet"
     label: ":anka: Ensure Anka Template Tag"
     branches: "mac-anka-fleet"
     async: true
