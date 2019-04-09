@@ -13,8 +13,8 @@ steps:
     async: false
     build:
       branch: "master"
-    env:
-      CLONE_BRANCH: "${BUILDKITE_BRANCH}"
+      env:
+        CLONE_BRANCH: "${BUILDKITE_BRANCH}"
 
   - label: ":darwin: Testing"
     command:
