@@ -22,5 +22,5 @@ steps:
       - "echo Yep"
     plugins:
     agents:
-      - "queue=mac-anka-fleet"
+      - "queue=mac-anka-node-fleet"
     timeout: 60
