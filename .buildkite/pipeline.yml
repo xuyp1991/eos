@@ -8,14 +8,12 @@
 steps:
 
   - trigger: "mac-anka-fleet"
-    label: ":anka: Ensure Anka Template Tag"
+    label: ":anka: Ensure Anka Template Tag Exists"
     branches: "mac-anka-fleet"
     async: true
     build:
       commit: "${BUILDKITE_COMMIT}"
       branch: "master"
-
-  - wait
 
   - label: ":darwin: Testing"
     command:
