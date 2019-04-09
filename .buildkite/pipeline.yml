@@ -16,6 +16,7 @@ steps:
       env:
         CLONE_BRANCH: "${BUILDKITE_BRANCH}"
 
+  - wait
   - label: ":darwin: Testing"
     command:
       - "echo Yep"
