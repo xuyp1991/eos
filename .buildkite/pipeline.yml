@@ -21,7 +21,7 @@ steps:
         TEMPLATE: "10.14.4_6C_16G_30G"
         TEMPLATE_TAG: "root::git-ssh::nas"
         TAG: "${BUILDKITE_PIPELINE_SLUG}"
-        TAG_COMMANDS: "./scripts/eosio_build.sh -y"
+        TAG_COMMANDS: "CLONED_REPO_DIR/scripts/eosio_build.sh -y" # CLONED_REPO_DIR is where the repo was cloned into
 
   - wait
 
