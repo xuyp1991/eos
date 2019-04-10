@@ -19,7 +19,9 @@ steps:
         REPO_DIRECTORY: "scripts" # use . for everything
         CHECKSUM: "scripts/eosio_build*"
         TEMPLATE: "10.14.4_6C_16G_30G"
+        TEMPLATE_TAG: "root::git-ssh::nas"
         TAG: "${BUILDKITE_PIPELINE_SLUG}"
+        TAG_COMMANDS: "echo test one two"
 
   - wait
 
