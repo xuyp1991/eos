@@ -47,22 +47,22 @@ steps:
   - wait
 
   - label: ":darwin: Mojave Tests"
-  command:
-    - "tar -xzf /Network/NAS/MAC_FLEET/BUILDKITE/artifacts/build-$BUILDKITE_BUILD_ID.tar.gz"
-    - "cd build && ~/bin/mongod --fork --dbpath ~/data/mongodb -f ~/etc/mongod.conf --logpath ./mongod.log && PATH=$PATH:~/opt/mongodb/bin ctest -j8 -LE _tests --output-on-failure"
-  artifact_paths:
-    - "build/mongod.log"
-    - "build/genesis.json"
-    - "build/config.ini"
-  agents:
-    - "queue=mac-anka-fleet"
-  plugins:
-    chef/anka#v0.4.3:
-      vm-name: $ANKA_MOJAVE_IMAGE_NAME
-      vm-registry-tag: $ANKA_MOJAVE_IMAGE_TAG
-      workdir: $ANKA_WORKDIR
-      # Tests don't need the host "working directory" mounted
-      no-volume: true
-      always-pull: "shrink"
-      debug: true
-  timeout: 60
+    command:
+      - "tar -xzf /Network/NAS/MAC_FLEET/BUILDKITE/artifacts/build-$BUILDKITE_BUILD_ID.tar.gz"
+      - "cd build && ~/bin/mongod --fork --dbpath ~/data/mongodb -f ~/etc/mongod.conf --logpath ./mongod.log && PATH=$PATH:~/opt/mongodb/bin ctest -j8 -LE _tests --output-on-failure"
+    artifact_paths:
+      - "build/mongod.log"
+      - "build/genesis.json"
+      - "build/config.ini"
+    agents:
+      - "queue=mac-anka-fleet"
+    plugins:
+      chef/anka#v0.4.3:
+        vm-name: $ANKA_MOJAVE_IMAGE_NAME
+        vm-registry-tag: $ANKA_MOJAVE_IMAGE_TAG
+        workdir: $ANKA_WORKDIR
+        # Tests don't need the host "working directory" mounted
+        no-volume: true
+        always-pull: "shrink"
+        debug: true
+    timeout: 60
