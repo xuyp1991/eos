@@ -41,7 +41,7 @@ steps:
         always-pull: "shrink"
         debug: true
     agents:
-      - "queue=mac-anka-fleet"
+      - "queue=mac-anka-node-fleet"
     timeout: 60
 
   - wait
@@ -55,7 +55,7 @@ steps:
       - "build/genesis.json"
       - "build/config.ini"
     agents:
-      - "queue=mac-anka-fleet"
+      - "queue=mac-anka-node-fleet"
     plugins:
       chef/anka#v0.4.3:
         vm-name: $ANKA_MOJAVE_IMAGE_NAME
