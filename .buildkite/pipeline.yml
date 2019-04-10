@@ -14,7 +14,7 @@ steps:
     build:
       branch: "master"
       env:
-        REPO: "${BUILDKITE_PULL_REQUEST_REPO}"
+        REPO: "${BUILDKITE_REPO}"
         REPO_BRANCH: "${BUILDKITE_BRANCH}"
         REPO_DIRECTORY: "scripts" # use . for everything
         CHECKSUM: "scripts/eosio_build*"
