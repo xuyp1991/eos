@@ -14,9 +14,15 @@ steps:
     build:
       branch: "master"
       env:
-        CLONE_BRANCH: "${BUILDKITE_BRANCH}"
+        REPO: "${BUILDKITE_PULL_REQUEST_REPO}"
+        REPO_BRANCH: "${BUILDKITE_BRANCH}"
+        REPO_DIRECTORY: "scripts" # use . for everything
+        CHECKSUM: "scripts/eosio_build*"
+        TEMPLATE: "10.14.4_6C_16G_30G"
+        TAG: "${BUILDKITE_PIPELINE_SLUG}"
 
   - wait
+
   - label: ":darwin: Testing"
     command:
       - "echo Yep"
