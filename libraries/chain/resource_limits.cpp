@@ -416,7 +416,8 @@ account_resource_limit resource_limits_manager::get_account_net_limit_ex( const 
    get_account_limits( name, x, net_weight, y );
 
    if( net_weight < 0 || state.total_net_weight == 0) {
-      return { -1, -1, -1 };
+      //return { -1, -1, -1 };
+      return { 0, 0, 0 };
    }
 
    account_resource_limit arl;
